@@ -15,7 +15,7 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	if(argc = 2)
+	if(argc == 2)
 	{
 		int iInput = strtol(argv[1], NULL, 0);  // argv[1] is the user input
 		const int MAX = 125;
@@ -30,7 +30,7 @@ int main (int argc, char *argv[])
 		}
 	}
 
-	if(argc = 3)
+	if(argc == 3)
 	{
 		int iInput1 = strtol(argv[1], NULL, 0);  // argv[1] is the first user input
 		int iInput2 = strtol(argv[2], NULL, 0);  // argv[2] is the second user input
