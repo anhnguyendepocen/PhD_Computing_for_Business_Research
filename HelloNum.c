@@ -11,7 +11,6 @@ int main (int argc, char *argv[])
 	// Check if HelloNum is called with one argument
 	if(argc != 2)
 	{
-		printf("Need an argument.\n");
 		usage (argv[0]); // argv[0] is always the program name
 		exit (1);
 	}
