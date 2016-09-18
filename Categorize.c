@@ -17,14 +17,34 @@ int main (int argc, char *argv[])
 
 	int iInput = strtol(argv[1], NULL, 0);  // argv[1] is the user input
 
-	// Print to stdout or stderr the correct ouput depending on the value of the input
-	if(iInput = 0)
+	// Print to stdout the correct ouput depending on the value of the input
+	if(iInput == 0)
 	{
 		printf("baby");
 	}
 	else if(iInput > 0 && iInput <= 3)
 	{
 		printf("toddler");
+	}
+	else if(iInput > 3 && iInput <= 12)
+	{
+		printf("child");
+	}
+	else if(iInput > 12 && iInput <= 19)
+	{
+		printf("teenagers");
+	}
+	else if(iInput > 19 && iInput <= 22)
+	{
+		printf("youngadult");
+	}
+	else if(iInput > 22 && iInput <= 65)
+	{
+		printf("adult");
+	}
+	else if(iInput > 65 && iInput <= 125)
+	{
+		printf("senior");
 	}
 
 	return 0;
