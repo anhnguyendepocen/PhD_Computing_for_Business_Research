@@ -16,7 +16,7 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	int iInput = strtol(argv[1], Null, 0);  // argv[1] is the user input
+	int iInput = strtol(argv[1], NULL, 0);  // argv[1] is the user input
 
 	// Print to stdout or stderr the correct ouput depending on the value of the input
 	if(iInput >= 0)
@@ -25,7 +25,7 @@ int main (int argc, char *argv[])
 	}
 	else
 	{
-		fprintf(stderr, "%d, neg");
+		fprintf(stderr, "%d, neg", iInput);
 	}
 
 	return 0;
