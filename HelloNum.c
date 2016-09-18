@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Function declarations
+// Function Declarations
 void usage (char *progname);
 
 
 // Main
 int main (int argc, char *argv[])
 {
+	// Check if HelloNum is called with one argument
 	if(argc != 2)
 	{
 		printf("Need an argument.\n");
@@ -15,10 +16,20 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
+	int iInput = strtol(argv[1], Null, 0);  // argv[1] is the user input
 
+	// Print to stdout or stderr the correct ouput depending on the value of the input
+	if(iInput >= 0)
+	{
+		printf("%d, pos", iInput);
+	}
+	else
+	{
+		fprintf(stderr, "%d, neg");
+	}
+
+	return 0;
 }
-
-
 
 
 // Function Definitions
