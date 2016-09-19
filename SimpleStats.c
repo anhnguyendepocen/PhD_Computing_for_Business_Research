@@ -36,16 +36,13 @@ int main (int argc, char *argv[])
 		}
 	}
 
+	// Calculate the four numbers that will be printed to screen
+	int iN = sizeof(piInputList) / sizeof(piInputList[0]);  // Calculate the size of the array
+	int iMax = max(piInputList);
+	int iMin = min(piInputList);
+	int iMean = mean(piInputList);
 
-	// Print to stdout or stderr the correct ouput depending on the value of the input
-	if(iInput >= 0)
-	{
-		printf("%d, pos", iInput);
-	}
-	else
-	{
-		fprintf(stderr, "%d, neg", iInput);
-	}
+	printf("%d, %d, %d, %1.2f");
 
 	return 0;
 }
