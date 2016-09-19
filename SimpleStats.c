@@ -5,7 +5,7 @@
 void usage (char *progname);
 int max (int *piInput);
 int min (int *piInput);
-int mean (int *piInput);
+double mean (int *piInput);
 
 
 // Main
@@ -40,9 +40,9 @@ int main (int argc, char *argv[])
 	int iN = sizeof(piInputList) / sizeof(piInputList[0]);  // Calculate the size of the array
 	int iMax = max(piInputList);
 	int iMin = min(piInputList);
-	int iMean = mean(piInputList);
+	double dMean = mean(piInputList);
 
-	printf("%d, %d, %d, %1.2f");
+	printf("%d, %d, %d, %1.2f",iN, iMax, iMin, dMean);
 
 	return 0;
 }
@@ -84,7 +84,7 @@ int min (int *piInput)
 	return iMin;
 }
 
-int mean (int *piInput)
+double mean (int *piInput)
 {
 	int iSum = 0;
 	int n = sizeof(piInput) / sizeof(piInput[0]);  // Calculate the size of the array
@@ -92,5 +92,6 @@ int mean (int *piInput)
 	{
 		iSum += piInput[j];
 	}
-	return double(iSum)/double(n);
+	double dAvg = (double)iSum/n;
+	return dAvg;
 }
