@@ -3,9 +3,6 @@
 
 // Function Declarations
 void usage (char *progname);
-int max (int *piInput);
-int min (int *piInput);
-double mean (int *piInput);
 
 
 // Main
@@ -18,31 +15,41 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	// Create a list to store user input and a pointer to keep track of that list
-	int iInputList[argc-1];
-	int *piInputList;
-	piInputList = &iInputList[0];
+	int iMax = strtol(argv[1], NULL, 0);
+	int iMin = strtol(argv[1], NULL, 0);
+	int iSum = 0;
+	int iValid = 0;
 
 	for (int i = 1; i < argc; i++)
 	{
 		int iCheck = strtol(argv[i], NULL, 0);
+		// If the number is valid, keep track of sum, max, and min
 		if (iCheck >= 0)
-		{
-			iInputList[i-1] = iCheck;
+		{	
+			iValid++;
+			iSum += iCheck;
+			if (iCheck < iMin)
+			{
+				iMin = iCheck;
+			}
+			if (iCheck > iMax)
+			{
+				iMax = iCheck;
+			}
 		}
+		// If the number is invalid, print to stderr
 		else
 		{
-			fprintf(stderr, "ERROR: %d invalid", iCheck);
+			fprintf(stderr, "ERROR: %d invalid\n", iCheck);
+			fflush(stderr);
+
 		}
 	}
 
-	// Calculate the four numbers that will be printed to screen
-	int iN = sizeof(piInputList) / sizeof(piInputList[0]);  // Calculate the size of the array
-	int iMax = max(piInputList);
-	int iMin = min(piInputList);
-	double dMean = mean(piInputList);
+	double dMean = (double)iSum/iValid;
 
-	printf("%d, %d, %d, %1.2f",iN, iMax, iMin, dMean);
+	printf("%d, %d, %d, %1.2f",iValid, iMax, iMin, dMean);
+	fflush(stdout);
 
 	return 0;
 }
@@ -53,45 +60,5 @@ int main (int argc, char *argv[])
 // usage: takes a program name as an argument and prints a usage error message to stderr
 void usage (char *progname)
 {
-	fprintf(stderr, "ERROR: USAGE: %s integer", progname);
-}
-
-int max (int *piInput)
-{
-	int iMax = piInput[0];
-	int n = sizeof(piInput) / sizeof(piInput[0]);  // Calculate the size of the array
-	for (int j = 0; j < n; j++)
-	{
-		if(piInput[j] > iMax)
-		{
-			iMax = piInput[j];
-		}
-	}
-	return iMax;
-}
-
-int min (int *piInput)
-{
-	int iMin = piInput[0];
-	int n = sizeof(piInput) / sizeof(piInput[0]);  // Calculate the size of the array
-	for (int j = 0; j < n; j++)
-	{
-		if(piInput[j] < iMin)
-		{
-			iMin = piInput[j];
-		}
-	}
-	return iMin;
-}
-
-double mean (int *piInput)
-{
-	int iSum = 0;
-	int n = sizeof(piInput) / sizeof(piInput[0]);  // Calculate the size of the array
-	for (int j = 0; j < n; j++)
-	{
-		iSum += piInput[j];
-	}
-	double dAvg = (double)iSum/n;
-	return dAvg;
+	fprintf(stderr, "ERROR: USAGE: %s integer <integer, integer,...>", progname);
 }
