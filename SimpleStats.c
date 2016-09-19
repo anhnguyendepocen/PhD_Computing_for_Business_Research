@@ -25,8 +25,17 @@ int main (int argc, char *argv[])
 
 	for (int i = 1; i < argc; i++)
 	{
-		iInputList[i-1] = strtol(argv[i], NULL, 0);
+		int iCheck = strtol(argv[i], NULL, 0);
+		if (iCheck >= 0)
+		{
+			iInputList[i-1] = iCheck;
+		}
+		else
+		{
+			fprintf(stderr, "ERROR: %d invalid", iCheck);
+		}
 	}
+
 
 	// Print to stdout or stderr the correct ouput depending on the value of the input
 	if(iInput >= 0)
@@ -50,4 +59,41 @@ void usage (char *progname)
 	fprintf(stderr, "ERROR: USAGE: %s integer", progname);
 }
 
+int max (int *piInput)
+{
+	int iMax = piInput[0];
+	int n = sizeof(piInput) / sizeof(piInput[0]);  // Calculate the size of the array
+	for (int j = 0; j < n; j++)
+	{
+		if(piInput[j] > iMax)
+		{
+			iMax = piInput[j];
+		}
+	}
+	return iMax;
+}
 
+int min (int *piInput)
+{
+	int iMin = piInput[0];
+	int n = sizeof(piInput) / sizeof(piInput[0]);  // Calculate the size of the array
+	for (int j = 0; j < n; j++)
+	{
+		if(piInput[j] < iMin)
+		{
+			iMin = piInput[j];
+		}
+	}
+	return iMin;
+}
+
+int mean (int *piInput)
+{
+	int iSum = 0;
+	int n = sizeof(piInput) / sizeof(piInput[0]);  // Calculate the size of the array
+	for (int j = 0; j < n; j++)
+	{
+		iSum += piInput[j];
+	}
+	return double(iSum)/double(n);
+}
