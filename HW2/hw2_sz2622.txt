@@ -1,0 +1,109 @@
+Git Log
+--------------------------------------------------------------
+
+shengzhang0830@shengzhang0830- MINGW64 /HW2 (master)
+$ git log
+commit 212dabb7e6b8f53fd4b2f93f2fb3fc4d2f9d20a3
+Author: Sheng Zhang <shengzhang0830@hotmail.com>
+Date:   Tue Sep 20 07:30:57 2016 +0800
+
+    SimpleStats.c finished.
+
+commit 0a39ec84e88e74c905070f1dbbe027cf281acf2f
+Author: Sheng Zhang <shengzhang0830@hotmail.com>
+Date:   Mon Sep 19 10:48:48 2016 +0800
+
+    compilable SimpleStats.c, output to be fixed tomorrow.
+
+commit a24cb4d1d5148ac39bc8c5fa7c67c6298cbb40a4
+Author: Sheng Zhang <shengzhang0830@hotmail.com>
+Date:   Mon Sep 19 10:38:45 2016 +0800
+
+    Simplestats.c to be tested.
+
+commit 856b1cfc70adde7bb1b12428a2cad9b9084ff10a
+Author: Sheng Zhang <shengzhang0830@hotmail.com>
+Date:   Mon Sep 19 10:30:55 2016 +0800
+
+    function defined for Simplestats.c.
+
+commit 783ce8a254a7d05d0663528a1c67c1391ee23752
+Author: Sheng Zhang <shengzhang0830@hotmail.com>
+Date:   Mon Sep 19 08:53:50 2016 +0800
+
+    Simplestats.c created.
+
+commit 78f9c1946ecb97f67ddef90042e337e5fab8d50d
+Author: Sheng Zhang <shengzhang0830@hotmail.com>
+Date:   Mon Sep 19 03:01:22 2016 +0800
+
+    Categorize.c finished.
+
+commit 84f34b6d80f0f883ac60e1d8b3da6b164d7d0f10
+Author: Sheng Zhang <shengzhang0830@hotmail.com>
+Date:   Mon Sep 19 02:51:23 2016 +0800
+
+    Categorize.c created.
+
+commit 709d4d89654240e9cc29b7c074581e7eb25e401a
+Author: Sheng Zhang <shengzhang0830@hotmail.com>
+Date:   Mon Sep 19 00:34:10 2016 +0800
+
+    finished InRange.c.
+
+commit a4c3f45f605ee64d326f324ac0a25b6c02dd052e
+Author: Sheng Zhang <shengzhang0830@hotmail.com>
+Date:   Mon Sep 19 00:31:42 2016 +0800
+
+    warnings eliminated.
+
+commit 0021c6c4937ac398fe3a447c7731d2b14c18ca69
+Author: Sheng Zhang <shengzhang0830@hotmail.com>
+Date:   Mon Sep 19 00:21:13 2016 +0800
+
+    main completed for InRange.c.
+
+commit d33f05cba65269eec863a4d8246e1b6c5becd3f5
+Author: Sheng Zhang <shengzhang0830@hotmail.com>
+Date:   Sun Sep 18 23:46:02 2016 +0800
+
+    InRange.c created.
+
+commit 7af8d6edb863776a7e564f20ec567db1d14ae8b1
+Author: Sheng Zhang <shengzhang0830@hotmail.com>
+Date:   Sun Sep 18 09:24:43 2016 +0800
+
+    small changes for desired output.
+
+commit 0a0f3e4e2e60a117537e685da9794499a9484b9e
+Author: Sheng Zhang <shengzhang0830@hotmail.com>
+Date:   Sun Sep 18 09:18:26 2016 +0800
+
+    warnings eliminated.
+
+commit 8b72a7bfb163bf4fbeba3bae9fe08429384db1e0
+Author: Sheng Zhang <shengzhang0830@hotmail.com>
+Date:   Sun Sep 18 09:15:23 2016 +0800
+
+    main finished.
+
+commit 60a1e842f96c0f9499bac8cab21ac2f9fb2eabc3
+Author: Sheng Zhang <shengzhang0830@hotmail.com>
+Date:   Sun Sep 18 08:56:58 2016 +0800
+
+    usage function defined.
+
+commit 99fbedfb1512270668f59c4a8431959aa83ebff1
+Author: Sheng Zhang <shengzhang0830@hotmail.com>
+Date:   Sun Sep 18 08:30:57 2016 +0800
+
+    HelloNum.c created.
+
+--------------------------------------------------------------
+
+
+--------------------------------------------------------------
+
+
+
+
