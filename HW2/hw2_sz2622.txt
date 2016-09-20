@@ -1,5 +1,6 @@
-Git Log
+
 --------------------------------------------------------------
+Git Log
 
 shengzhang0830@shengzhang0830- MINGW64 /HW2 (master)
 $ git log
@@ -100,10 +101,106 @@ Date:   Sun Sep 18 08:30:57 2016 +0800
     HelloNum.c created.
 
 --------------------------------------------------------------
+HelloNum.c
 
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./HelloNum
+ERROR: USAGE: D:\tools\git\sz2622\b9122-sz2622\HW2\HelloNum.exe integer
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./HelloNum 2
+2, pos
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./HelloNum -1
+-1, neg
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./HelloNum 100
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./HelloNum -9
+-9, neg
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./HelloNum 0
+0, pos
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./HelloNum 1 2
+ERROR: USAGE: D:\tools\git\sz2622\b9122-sz2622\HW2\HelloNum.exe integer
 
 --------------------------------------------------------------
+InRange.c
 
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./InRange
+ERROR: USAGE: D:\tools\git\sz2622\b9122-sz2622\HW2\InRange.exe integer
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./InRange 1
+1
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./InRange 124
+124
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./InRange 126
+126
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./InRange -5
+-5
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./InRange 1 4
+1
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./InRange 1 127
+ERROR: USAGE: D:\tools\git\sz2622\b9122-sz2622\HW2\InRange.exe integer
 
+--------------------------------------------------------------
+Categorize.c
 
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./Categorize
+ERROR: USAGE: D:\tools\git\sz2622\b9122-sz2622\HW2\Categorize.exe integer
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./Categorize -1
+ERROR: USAGE: D:\tools\git\sz2622\b9122-sz2622\HW2\Categorize.exe integer
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./Categorize 0
+baby
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./Categorize 1
+toddler
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./Categorize 4
+child
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./Categorize 13
+teenagers
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./Categorize 20
+youngadult
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./Categorize 25
+adult
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./Categorize 75
+senior
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./Categorize 126
+ERROR: USAGE: D:\tools\git\sz2622\b9122-sz2622\HW2\Categorize.exe integer
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./Categorize 1 25
+ERROR: USAGE: D:\tools\git\sz2622\b9122-sz2622\HW2\Categorize.exe integer
 
+--------------------------------------------------------------
+SimpleStats.c
+
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./SimpleStats
+ERROR: USAGE: D:\tools\git\sz2622\b9122-sz2622\HW2\SimpleStats.exe integer <integer, integer,...>
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./SimpleStats 1
+1, 1, 1, 1.00
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./SimpleStats 1 2 -3 3 4
+ERROR: -3 invalid
+4, 4, 1, 2.50
+shengzhang0830@shengzhang0830- MINGW64 /d/tools/git/sz2622/b9122-sz2622/HW2 (master)
+$ ./SimpleStats 3 5 6
+3, 6, 3, 4.67
+
+--------------------------------------------------------------

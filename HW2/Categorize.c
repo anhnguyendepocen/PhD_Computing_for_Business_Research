@@ -46,6 +46,11 @@ int main (int argc, char *argv[])
 	{
 		printf("senior");
 	}
+	else
+	{
+		usage (argv[0]); // argv[0] is always the program name
+		exit (1);		
+	}
 
 	return 0;
 }
