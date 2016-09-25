@@ -106,5 +106,12 @@ void usage (char *progname)
 // sumcubes: takes a vector of doubles and the range of values as arguments, and returns the sum of the cubes of the elements of this vector
 double sumcubes (double *pdv, long nl, long nh)
 {
-
+	double sum = 0.0;
+	for (int i = nl; i <= nh; i++)
+	{
+		sum += pdv[i]*pdv[i]*pdv[i];
+	}
+	return sum;
 }
+
+
