@@ -33,6 +33,7 @@ int main (int argc, char *argv[])
 		iNumLines = strtol(argv[2], NULL, 0);		
 	}
 	
+	// Open two files, one for input and the other for output
 	#define FILE_NAME FILENAME;
 	#define OUTFILE "SumCubesOutput.txt"
 
@@ -41,6 +42,12 @@ int main (int argc, char *argv[])
 	file_in = fopen(FILE_NAME, "r");
 	if (file_in == NULL)
 	{
+		fprintf(stderr, "Error Reading File\n");
+		exit (1);
+	}
+
+	file_out = fopen(OUTFILE, "w");
+	if (file_out == NULL){
 		fprintf(stderr, "Error Reading File\n");
 		exit (1);
 	}
@@ -89,6 +96,17 @@ int main (int argc, char *argv[])
 	print_vec("pdPosVec", pdPosVec, 1, iPosLines);
 	print_vec("pdNegVec", pdNegVec, 1, iNegLines);	
 
+	// Call the sumcubes function and print the results to both the screen and the output file
+	double dSumCubesPos = sumcubes(pdPosVec, 1, iPosLines);
+	double dSumCubesNeg = sumcubes(pdPosNeg, 1, iNegLines);
+	prinf("The sum of cubes for pdPosVec is %ld, while the sum of cubes for pdPosNeg is %ld", dSumCubesPos, dSumCubesNeg);
+	fprintf(file_out, "The sum of cubes for pdPosVec is %ld, while the sum of cubes for pdPosNeg is %ld", dSumCubesPos, dSumCubesNeg);
+
+	// Free the vectors
+	free_dvector(pdPosVec, 1, iPosLines);
+	free_dvector(pdNegVec, 1, iNegLines);
+	fclose(file_in);
+	fclose(file_out);
 
 	return(0);
 }
