@@ -17,17 +17,17 @@ int main (int argc, char *argv[])
 	double *pdPosVec, *pdNegVec;
 
 	// Check if HelloNum is called with an argument
-	if(argc < 1 || argc > 2)
+	if(argc < 2 || argc > 3)
 	{
 		usage (argv[0]);
 		exit (1);
 	}
-	else if(argc == 1)
+	else if(argc == 2)
 	{
 		FILENAME = argv[1];
 		iNumLines = 10;
 	}
-	else if(argc == 2)
+	else if(argc == 3)
 	{
 		FILENAME = argv[1];
 		iNumLines = strtol(argv[2], NULL, 0);		
@@ -104,8 +104,8 @@ int main (int argc, char *argv[])
 	// Call the sumcubes function and print the results to both the screen and the output file
 	double dSumCubesPos = sumcubes(pdPosVec, 1, iPosLines);
 	double dSumCubesNeg = sumcubes(pdNegVec, 1, iNegLines);
-	printf("The sum of cubes for pdPosVec is %lf, while the sum of cubes for pdPosNeg is %lf", dSumCubesPos, dSumCubesNeg);
-	fprintf(file_out, "The sum of cubes for pdPosVec is %lf, while the sum of cubes for pdPosNeg is %lf", dSumCubesPos, dSumCubesNeg);
+	printf("The sum of cubes for pdPosVec is %lf.\nThe sum of cubes for pdPosNeg is %lf.\n", dSumCubesPos, dSumCubesNeg);
+	fprintf(file_out, "The sum of cubes for pdPosVec is %lf.\nThe sum of cubes for pdPosNeg is %lf.\n", dSumCubesPos, dSumCubesNeg);
 
 	// Free the vectors
 	free_dvector(pdPosVec, 1, iPosLines);
