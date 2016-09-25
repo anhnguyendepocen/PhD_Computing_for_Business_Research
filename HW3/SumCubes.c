@@ -10,36 +10,36 @@ double sumcubes (double *pdv, long nl, long nh);
 // Main
 int main (int argc, char *argv[])
 {
-	str FILENAME;
+	char *FILENAME;
 	int iNumLines = 0;
 	int iPosLines = 0;
 	int iNegLines = 0;
 	double *pdPosVec, *pdNegVec;
 
 	// Check if HelloNum is called with an argument
-	if(argc < 1 || arc > 2)
+	if(argc < 1 || argc > 2)
 	{
 		usage (argv[0]);
 		exit (1);
 	}
-	else if(argc = 1)
+	else if(argc == 1)
 	{
 		FILENAME = argv[1];
 		iNumLines = 10;
 	}
-	else if(argc = 2)
+	else if(argc == 2)
 	{
 		FILENAME = argv[1];
 		iNumLines = strtol(argv[2], NULL, 0);		
 	}
 	
 	// Open two files, one for input and the other for output
-	#define FILE_NAME FILENAME;
+	// #define FILE_NAME FILENAME;
 	#define OUTFILE "SumCubesOutput.txt"
 
   	FILE *file_in, *file_out; 
 
-	file_in = fopen(FILE_NAME, "r");
+	file_in = fopen(FILENAME, "r");
 	if (file_in == NULL)
 	{
 		fprintf(stderr, "Error Reading File\n");
@@ -53,10 +53,12 @@ int main (int argc, char *argv[])
 	}
 
 	// Step through each line of the file and count the number of lines with a positive number or with a negative number 
-	while(fgets(line, 50, file_in) != NULL)
+	char *line = NULL;
+	int iLineIterator = iNumLines;
+	while(fgets(line, 50, file_in) != NULL && iLineIterator > 0)
    	{
    		double dNumber;
-		sscanf (line, "%ld", &dNumber);
+		sscanf (line, "%lf", &dNumber);
 		if(dNumber > 0)
 		{
 			iPosLines++;
@@ -65,6 +67,7 @@ int main (int argc, char *argv[])
 		{
 			iNegLines++;
 		}
+		iLineIterator--;
 	}	
 
 	// Finish creating pdPosVec and pdNegVec
@@ -76,11 +79,12 @@ int main (int argc, char *argv[])
 	int j=1;
 
 	// Fill in pdPosVec and pdNegVec
-	while(fgets(line, 50, file_in) != NULL)
+	int iLineIterator2 = iNumLines;
+	while(fgets(line, 50, file_in) != NULL && iLineIterator2 > 0)
 	{
 		double dNumber;
-		sscanf (line, "%ld", &dNumber);
-		if(dNumeber > 0)
+		sscanf (line, "%lf", &dNumber);
+		if(dNumber > 0)
 		{
 			pdPosVec[i] = dNumber;
 			i++;
@@ -90,6 +94,7 @@ int main (int argc, char *argv[])
 			pdNegVec[j] = dNumber;
 			j++;
 		}
+		iLineIterator2--;
 	}
 
 	// Print out pdPosVec and pdNegVec
@@ -98,9 +103,9 @@ int main (int argc, char *argv[])
 
 	// Call the sumcubes function and print the results to both the screen and the output file
 	double dSumCubesPos = sumcubes(pdPosVec, 1, iPosLines);
-	double dSumCubesNeg = sumcubes(pdPosNeg, 1, iNegLines);
-	prinf("The sum of cubes for pdPosVec is %ld, while the sum of cubes for pdPosNeg is %ld", dSumCubesPos, dSumCubesNeg);
-	fprintf(file_out, "The sum of cubes for pdPosVec is %ld, while the sum of cubes for pdPosNeg is %ld", dSumCubesPos, dSumCubesNeg);
+	double dSumCubesNeg = sumcubes(pdNegVec, 1, iNegLines);
+	printf("The sum of cubes for pdPosVec is %lf, while the sum of cubes for pdPosNeg is %lf", dSumCubesPos, dSumCubesNeg);
+	fprintf(file_out, "The sum of cubes for pdPosVec is %lf, while the sum of cubes for pdPosNeg is %lf", dSumCubesPos, dSumCubesNeg);
 
 	// Free the vectors
 	free_dvector(pdPosVec, 1, iPosLines);
