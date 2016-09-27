@@ -53,12 +53,13 @@ int main (int argc, char *argv[])
 	}
 
 	// Step through each line of the file and count the number of lines with a positive number or with a negative number 
-	char *line = NULL;
+	double dNumber = 0;
 	int iLineIterator = iNumLines;
-	while(fgets(line, 50, file_in) != NULL && iLineIterator > 0)
+	while(fscanf(file_in, "%lf", &dNumber) != EOF && iLineIterator > 0)
    	{
-   		double dNumber;
-		sscanf (line, "%lf", &dNumber);
+		//sscanf (line, "%lf", &dNumber);
+		printf("Line is %d; Number is %lf.\n", iLineIterator, dNumber);
+		fflush(stdout);
 		if(dNumber > 0)
 		{
 			iPosLines++;
@@ -74,23 +75,33 @@ int main (int argc, char *argv[])
 	pdPosVec = dvector(1, iPosLines);
 	pdNegVec = dvector(1, iNegLines);
 
+	// Close the file and reopen it for reading it the second time
+	fclose(file_in);
+	file_in = fopen(FILENAME, "r");
+	if (file_in == NULL)
+	{
+		fprintf(stderr, "Error Reading File\n");
+		exit (1);
+	}
+
 	// Create two iterators for filling in the two vectors
 	int i=1;
 	int j=1;
 
 	// Fill in pdPosVec and pdNegVec
 	int iLineIterator2 = iNumLines;
-	while(fgets(line, 50, file_in) != NULL && iLineIterator2 > 0)
+	while(fscanf(file_in, "%lf", &dNumber) != EOF && iLineIterator2 > 0)
 	{
-		double dNumber;
-		sscanf (line, "%lf", &dNumber);
+		//sscanf (line, "%lf", &dNumber);
+		printf("Line is %d; Number is %lf.\n", iLineIterator2, dNumber);
+		fflush(stdout);
 		if(dNumber > 0)
 		{
 			pdPosVec[i] = dNumber;
 			i++;
 		}
 		if(dNumber < 0)
-		{
+		{ 
 			pdNegVec[j] = dNumber;
 			j++;
 		}

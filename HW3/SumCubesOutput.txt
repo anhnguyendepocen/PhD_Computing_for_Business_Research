@@ -1,1 +1,2 @@
-The sum of cubes for pdPosVec is 0.000000, while the sum of cubes for pdPosNeg is 0.000000
+The sum of cubes for pdPosVec is 2888979.790260.
+The sum of cubes for pdPosNeg is -2266614.912645.
