@@ -16,7 +16,7 @@ int main (int argc, char *argv[])
 	int iNegLines = 0;
 	double *pdPosVec, *pdNegVec;
 
-	// Check if HelloNum is called with an argument
+	// Check if HelloNum is called with one or two arguments
 	if(argc < 2 || argc > 3)
 	{
 		usage (argv[0]);
@@ -34,7 +34,6 @@ int main (int argc, char *argv[])
 	}
 	
 	// Open two files, one for input and the other for output
-	// #define FILE_NAME FILENAME;
 	#define OUTFILE "SumCubesOutput.txt"
 
   	FILE *file_in, *file_out; 
@@ -52,14 +51,11 @@ int main (int argc, char *argv[])
 		exit (1);
 	}
 
-	// Step through each line of the file and count the number of lines with a positive number or with a negative number 
+	// Step through each line of the file and count the number of lines with a positive number or with a negative number
 	double dNumber = 0;
 	int iLineIterator = iNumLines;
 	while(fscanf(file_in, "%lf", &dNumber) != EOF && iLineIterator > 0)
    	{
-		//sscanf (line, "%lf", &dNumber);
-		printf("Line is %d; Number is %lf.\n", iLineIterator, dNumber);
-		fflush(stdout);
 		if(dNumber > 0)
 		{
 			iPosLines++;
@@ -92,9 +88,6 @@ int main (int argc, char *argv[])
 	int iLineIterator2 = iNumLines;
 	while(fscanf(file_in, "%lf", &dNumber) != EOF && iLineIterator2 > 0)
 	{
-		//sscanf (line, "%lf", &dNumber);
-		printf("Line is %d; Number is %lf.\n", iLineIterator2, dNumber);
-		fflush(stdout);
 		if(dNumber > 0)
 		{
 			pdPosVec[i] = dNumber;
