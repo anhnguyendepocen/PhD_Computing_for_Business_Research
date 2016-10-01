@@ -1,5 +1,4 @@
 // knn.c
-// Author: Dongwook Shin, 2014/08/08
 // This program illustrates k-nearest neighbors algorithm.
 // Input:
 //	- knn_train_data.csv
@@ -19,15 +18,40 @@
 #include "predict.h"
 
 
-int main(){
+// Function Prototypes
+void usage (char *progname);
+
+
+
+int main(int argc, char *argv[]){
+	
+
 	double **train_data, **test_data;
 	double **x_train, *y_train, **x_test, *y_test;
 	int i, j, l, m1, n1, m2, n2, k;
 	int numObsTrain, numParams, numObsTest;
-	char* trainFileName = "knn_train_data.csv";
-	char* testFileName = "knn_test_data.csv";
+	char *trainFileName, *testFileName;
 
-	// set k
+	// Check if HelloNum is called with one or two arguments
+	if(argc < 3 || argc > 4)
+	{
+		usage (argv[0]);
+		exit (1);
+	}
+	else if(argc == 3)
+	{
+		trainFileName = argv[1];
+		testFileName = argv[2];
+	}
+	else if(argc == 4)
+	{
+		trainFileName = argv[1];
+		testFileName = argv[2];
+		k = (int)strtol(argv[3], NULL, 0);		
+	}
+
+
+	// set k if not given by user
 	k = 3;
 
 	// Step 1. Import data from a file.
@@ -111,4 +135,14 @@ int main(){
 	free_dvector(y_test, 0, numObsTest - 1);
 
 	return 0;
+}
+
+
+
+// Function Definitions
+
+// usage: takes a program name as an argument and prints a usage error message to stderr
+void usage (char *progname)
+{
+	fprintf(stderr, "ERROR: USAGE: %s integer", progname);
 }
