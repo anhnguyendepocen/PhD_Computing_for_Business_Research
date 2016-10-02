@@ -28,7 +28,7 @@ int main(int argc, char *argv[]){
 
 	double **train_data, **test_data;
 	double **x_train, *y_train, **x_test, *y_test;
-	int i, j, l, m1, n1, m2, n2, k;
+	int m1, n1, m2, n2, k;
 	int numObsTrain, numParams, numObsTest;
 	char *trainFileName, *testFileName;
 
@@ -42,6 +42,8 @@ int main(int argc, char *argv[]){
 	{
 		trainFileName = argv[1];
 		testFileName = argv[2];
+		// set k if not given by user
+		k = 3;
 	}
 	else if(argc == 4)
 	{
@@ -51,14 +53,11 @@ int main(int argc, char *argv[]){
 	}
 
 
-	// set k if not given by user
-	k = 3;
-
 	// Step 1. Import data from a file.
-	//	in_sample_data is a matrix of dimension m1 by n1
+	//	train_data is a matrix of dimension m1 by n1
 	//		- the first column of the matrix is y vector
 	//		- the rest columns of the matrix are x matrix
-	//	out_of_sample_data is a matri of dimension m2 by n2
+	//	test_data is a matrix of dimension m2 by n2
 	//		- the whole matrix is x_new matrix
 	train_data = readCsv(trainFileName, &m1, &n1);
 	test_data = readCsv(testFileName, &m2, &n2);
@@ -80,21 +79,21 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
 
-	// translate in-sample data to x matrix and y vector
+	// translate training data to x matrix and y vector
 	x_train = dmatrix(0, numObsTrain - 1, 0, numParams - 1);
 	y_train = dvector(0, numObsTrain - 1);
-	for (i = 0; i < numObsTrain; i++){
+	for (int i = 0; i < numObsTrain; i++){
 		// first column is y
 		y_train[i] = train_data[i][0];
-		for (j = 1; j < numParams + 1; j++){
+		for (int j = 1; j < numParams + 1; j++){
 			x_train[i][j-1] = train_data[i][j];	
 		}
 	}
 
-	// translate out-of-sample data to x_new matrix
+	// translate test data to x_new matrix
 	x_test = dmatrix(0, numObsTest - 1, 0, numParams - 1);
-	for (i = 0; i < numObsTest; i++){
-		for (j = 0; j < numParams; j++){
+	for (int i = 0; i < numObsTest; i++){
+		for (int j = 0; j < numParams; j++){
 			x_test[i][j] = test_data[i][j];
 		}
 	}
@@ -106,9 +105,9 @@ int main(int argc, char *argv[]){
 	// Step 4. Print prediction result
 	printf("\nk-NN train data:\n");
 	printf("x_train \t\t | y_train\n");
-	for (i = 0; i < numObsTrain; i++){
+	for (int i = 0; i < numObsTrain; i++){
 		printf("(");
-		for (l = 0; l < numParams; l++){
+		for (int l = 0; l < numParams; l++){
 			printf("%3.1lf", x_train[i][l]);
 			if (l < numParams - 1)	printf(", ");
 		}
@@ -118,9 +117,9 @@ int main(int argc, char *argv[]){
 
 	printf("\nk-NN prediction result for test data with k = %d:\n", k);
 	printf("x_test \t\t\t | y_test\n");
-	for (i = 0; i < numObsTest; i++){
+	for (int i = 0; i < numObsTest; i++){
 		printf("(");
-		for (l = 0; l < numParams; l++){
+		for (int l = 0; l < numParams; l++){
 			printf("%3.1lf", x_test[i][l]);
 			if (l < numParams - 1)	printf(", ");
 		}

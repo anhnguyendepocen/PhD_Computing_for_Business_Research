@@ -13,7 +13,7 @@ struct dist_st{
 };
 
 void knn_predict(double **x_train, double *y_train, double **x_test, double *y_test, int k, int numObs, int numParams, int numObsTest){
-  int i, j, l;
+
   double *xi_test, *xj;
 
   for (i = 0; i < numObsTest; i++){
@@ -24,16 +24,20 @@ void knn_predict(double **x_train, double *y_train, double **x_test, double *y_t
 
     struct dist_st* dist_st_arr = (struct dist_st*) malloc(numObs * sizeof(struct dist_st));
     
-    // xi_new is ith row of the matrix x_new
+    // xi_new is ith row of the matrix x_test
     xi_test = dvector(0, numParams - 1);
-    for (l = 0; l < numParams; l++) xi_test[l] = x_test[i][l];
+    for (int l = 0; l < numParams; l++)
+    {
+      xi_test[l] = x_test[i][l];
+    }
     
-    for (j = 0; j < numObs; j++){
+    for (int j = 0; j < numObs; j++)
+    {
       // xj is the jth row of the matrix x
       xj = dvector(0, numParams - 1);
-      for (l = 0; l < numParams; l++) xj[l] = x_train[j][l];
+      for (int l = 0; l < numParams; l++) xj[l] = x_train[j][l];
 
-      // calculate the distance between xi_new and xj
+      // calculate the distance between xi_test and xj
       dist_st_arr[j].dist = dist_euclidean(numParams, xi_test, xj);
       dist_st_arr[j].y = y_train[j];
       free_dvector(xj, 0, numParams - 1);
@@ -45,7 +49,7 @@ void knn_predict(double **x_train, double *y_train, double **x_test, double *y_t
     
     // take average of k nearest neighbors
     y_test[i] = 0.0;
-    for (l = 0; l < k; l++){
+    for (int l = 0; l < k; l++){
       y_test[i] += dist_st_arr[l].y / (double)k;
     }
 
@@ -67,13 +71,12 @@ double dist_euclidean(int m, double *x1, double *x2){
   // Return Euclidean distance between x1[] and x2[].
   // The indexes of x1 and x2 are i=0,...,m-1.
 
-  int i;
   double dist;
 
   if(m==0)  return 0;
 
   dist = 0.0;
-  for(i = 0 ; i < m ; i++){
+  for(int i = 0 ; i < m ; i++){
     dist += (x1[i] - x2[i]) * (x1[i] - x2[i]);
   }
   
@@ -108,7 +111,7 @@ double** readCsv(char* fileName, int* m, int* n){
   char arr[200][32]={0x0};
   FILE *file;
 
-  int row, col, i;
+  int row, col;
   double** data;
   row = 0; col = 0;
 
@@ -136,7 +139,7 @@ double** readCsv(char* fileName, int* m, int* n){
   while(fgets(tmp,sizeof(tmp),file)!=0) // read a record 
   { 
     parse(tmp,",",arr,&fldcnt);    // whack record into fields 
-    for(i = 0; i < fldcnt; i++){
+    for(int i = 0; i < fldcnt; i++){
       data[row][col] = atof(arr[i]);
       col++;
     }
