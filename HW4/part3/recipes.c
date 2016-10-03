@@ -70,3 +70,48 @@ void free_dmatrix( double **m, long nrl, long nrh, long ncl, long nch )
   free((char*) (m+nrl-1));
 
 } // end of free_dmatrix
+
+
+/**********************************************************************/
+void print_mat(char *name, double **ppdEMat, int iMin, int iMax, 
+                int jMin, int jMax)
+{
+  // a simple routine to print the matrix ppdEMat 
+  // with row and column headers
+
+  int i, j;
+
+  printf("%s\n ", name);
+  for (i = iMin; i <= iMax; i++)     
+  { 
+      if (i == iMin)
+    { 
+         for (j = jMin; j <= jMax; j++) printf("%6d ", j);
+       printf("\n");
+    }
+
+      printf("%2d ", i);
+      for (j = jMin; j <= jMax; j++) 
+          printf("%6.2lf ", ppdEMat[i][j]);
+      printf("\n");
+  }
+  printf("\n");
+ 
+  return;
+
+}  // end of print_mat
+
+/**********************************************************************/
+void print_vec(char *name, double *pdEVec, int iMin, int iMax)
+{
+  int i;
+
+  printf("%s\n", name);
+  for (i = iMin; i <= iMax; i++)
+    { printf("%3d  %7.4lf ", i, pdEVec[i]);
+      printf("\n");
+    }
+  printf("\n");
+  return;
+  
+}  // end of print_vec

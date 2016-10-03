@@ -88,31 +88,58 @@ int main(int argc, char *argv[]){
 	}
 
 
-
-	// initialize max_min matrix
-	x_maxmin = dmatrix(0, numObsTrain - 1, 0, numParams - 1);
-	for (int i = 0; i < numParams; i++)
+	if(norm == 1)
 	{
-		// remember train_data has y value in first position
-		// so we assign the value at train_data[0][i+1]
-		x_maxmin[0][i] = x_maxmin[1][i] = train_data[0][i+1];
+		// initialize max_min matrix
+		x_maxmin = dmatrix(0, numObsTrain - 1, 0, numParams - 1);
+		for (int i = 0; i < numParams; i++)
+		{
+			// remember train_data has y value in first position
+			// so we assign the value at train_data[0][i+1]
+			x_maxmin[0][i] = x_maxmin[1][i] = train_data[0][i+1];
+		}
+
+		// calculate the max_min matrix
+		for (int i = 0; i < numParams; i++)
+		{
+			for (int j = 0; j < numObsTrain; j++)
+			{
+				// fill in the max of all parameters
+				if(x_maxmin[0][i] < train_data[j][i+1])
+				{
+					x_maxmin[0][i] = train_data[j][i+1];
+				}
+				// fill in the min of all parameters
+				if(x_maxmin[1][i] > train_data[j][i+1])
+				{
+					x_maxmin[1][i] = train_data[j][i+1];
+				}
+			}
+		}
+
+		// print the max_min matrix to the screen to check the results
+		print_mat("The max_min matrix is: ", x_maxmin, 1, numParams, 1, numObsTrain);		
 	}
 
 	// translate training data to x matrix and y vector
 	x_train = dmatrix(0, numObsTrain - 1, 0, numParams - 1);
 	y_train = dvector(0, numObsTrain - 1);
-	for (int i = 0; i < numObsTrain; i++){
+	for (int i = 0; i < numObsTrain; i++)
+	{
 		// first column is y
 		y_train[i] = train_data[i][0];
-		for (int j = 1; j < numParams + 1; j++){
+		for (int j = 1; j < numParams + 1; j++)
+		{
 			x_train[i][j-1] = train_data[i][j];	
 		}
 	}
 
 	// translate test data to x_new matrix
 	x_test = dmatrix(0, numObsTest - 1, 0, numParams - 1);
-	for (int i = 0; i < numObsTest; i++){
-		for (int j = 0; j < numParams; j++){
+	for (int i = 0; i < numObsTest; i++)
+	{
+		for (int j = 0; j < numParams; j++)
+		{
 			x_test[i][j] = test_data[i][j];
 		}
 	}
