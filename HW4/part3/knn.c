@@ -87,11 +87,14 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
 
+	x_train = dmatrix(0, numObsTrain - 1, 0, numParams - 1);
+	y_train = dvector(0, numObsTrain - 1);
+	x_test = dmatrix(0, numObsTest - 1, 0, numParams - 1);
 
 	if(norm == 1)
 	{
 		// initialize max_min matrix
-		x_maxmin = dmatrix(0, numObsTrain - 1, 0, numParams - 1);
+		x_maxmin = dmatrix(0, 1, 0, numParams - 1);
 		for (int i = 0; i < numParams; i++)
 		{
 			// remember train_data has y value in first position
@@ -100,42 +103,57 @@ int main(int argc, char *argv[]){
 		}
 
 		// calculate the max_min matrix
-		for (int i = 0; i < numParams; i++)
+		for (int i = 0; i < numObsTrain; i++)
 		{
-			for (int j = 0; j < numObsTrain; j++)
+			// first column is y
+			y_train[i] = train_data[i][0];
+			for (int j = 0; j < numParams; j++)
 			{
-				// fill in the max of all parameters
-				if(x_maxmin[0][i] < train_data[j][i+1])
+				x_train[i][j] = train_data[i][j+1];
+				if (train_data[i][j+1] < x_maxmin[0][j])
 				{
-					x_maxmin[0][i] = train_data[j][i+1];
+					x_maxmin[0][j]=train_data[i][j+1];
 				}
-				// fill in the min of all parameters
-				if(x_maxmin[1][i] > train_data[j][i+1])
+				if (train_data[i][j+1] > x_maxmin[1][j])
 				{
-					x_maxmin[1][i] = train_data[j][i+1];
+					x_maxmin[1][j]=train_data[i][j+1];
+				}
+			}
+		}
+		
+		// translate out-of-sample data to x_new matrix
+		for (int i = 0; i < numObsTest; i++)
+		{
+			for (int j = 0; j < numParams; j++)
+			{
+				x_test[i][j] = test_data[i][j];
+				if (test_data[i][j] < x_maxmin[0][j])
+				{
+					x_maxmin[0][j]=test_data[i][j];
+				}
+				if (test_data[i][j] > x_maxmin[1][j])
+				{
+					x_maxmin[1][j]=test_data[i][j];
 				}
 			}
 		}
 
 		// print the max_min matrix to the screen to check the results
-		print_mat("The max_min matrix is: ", x_maxmin, 1, numParams, 1, numObsTrain);		
+		print_mat("The max_min matrix is: ", x_maxmin, 0, 1, 0, numParams-1);		
 	}
 
 	// translate training data to x matrix and y vector
-	x_train = dmatrix(0, numObsTrain - 1, 0, numParams - 1);
-	y_train = dvector(0, numObsTrain - 1);
 	for (int i = 0; i < numObsTrain; i++)
 	{
 		// first column is y
 		y_train[i] = train_data[i][0];
-		for (int j = 1; j < numParams + 1; j++)
+		for (int j = 0; j < numParams; j++)
 		{
-			x_train[i][j-1] = train_data[i][j];	
+			x_train[i][j] = train_data[i][j+1];	
 		}
 	}
 
 	// translate test data to x_new matrix
-	x_test = dmatrix(0, numObsTest - 1, 0, numParams - 1);
 	for (int i = 0; i < numObsTest; i++)
 	{
 		for (int j = 0; j < numParams; j++)
