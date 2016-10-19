@@ -5,10 +5,10 @@ import sys
 # read in the file
 try: 
     if sys.argv[1] == "-":
-        lines = sys.stdin.readlines()
+        lines = sys.stdin.read()
     else:
         # use open() to open a file 
-        lines = open(sys.argv[1]).readlines()
+        lines = open(sys.argv[1]).read()
 except:
     print("Usage: %s <filename|->" % sys.argv[0])
     sys.exit(1)
@@ -17,9 +17,8 @@ except:
 words_lengths = {}
         
 # fill in the dictionary
-for line in lines:
-	for i in line.split():
-		words_lengths[i]=len(i)
+for word in lines.split():
+	words_lengths[word]=len(word)
 
 
 # sort the dictionary based on its values (word lengths)

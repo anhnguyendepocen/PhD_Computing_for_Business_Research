@@ -21,3 +21,5 @@ else:
 	mymod.hwfunone(x)
 
 
+# used to run but now doesn't work
+# should we give the user another chance if the length is not 2?
