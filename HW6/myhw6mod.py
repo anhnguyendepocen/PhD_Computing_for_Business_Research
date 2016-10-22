@@ -14,7 +14,7 @@ def haversine(lon1,lat1,lon2,lat2):
 	on the earth (specified in decimal degrees)
 	"""
 	# convert decimal degrees to radians
-	lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+	lon1, lat1, lon2, lat2 = map(radians, [abs(lon1), abs(lat1), abs(lon2), abs(lat2)])
 	# haversine formula
 	dlon = lon2 - lon1
 	dlat = lat2 - lat1
@@ -24,3 +24,4 @@ def haversine(lon1,lat1,lon2,lat2):
 	r = 3956 # Radius of earth in miles
 	distance = c * r
 	return(distance)
+
