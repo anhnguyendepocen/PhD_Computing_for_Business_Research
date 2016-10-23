@@ -30,9 +30,13 @@ except:
 xlist = []
 ylist = []
 sse = 0
+bad_obs = 0
 
 for i in range(1,data.shape[0]):
     x = mymod.haversine(data.loc[i,'pickup_longitude'],data.loc[i,'pickup_latitude'],data.loc[i,'dropoff_longitude'],data.loc[i,'dropoff_latitude'])
+    if x == 0:
+        bad_obs = 0
+        continue
     xlist.append(x)
     y = data.loc[i,'total_amount']/x
     ylist.append(y)
@@ -44,5 +48,5 @@ plt.xlabel("Distance");
 plt.ylabel("Cost per Mile")
 plt.show()
 
-rmse = math.sqrt(sse/data.shape[0])
+rmse = math.sqrt(sse/(data.shape[0]-bad_obs))
 print("rmse is",rmse)

@@ -49,4 +49,23 @@ $ curl -s https://www.gnu.org/licenses/gpl-3.0.txt | ./countwords.py -
 142 or
 
 4.
+shengzhang0830@shengzhang0830- MINGW64 /b9122-sz2622/hw6 (master)
+$ head -1 yellow_tripdata_2016-01.csv | cut -f 5,6,7,10,11,19 -d, > 10dollarrides.csv   
+
+shengzhang0830@shengzhang0830- MINGW64 /b9122-sz2622/hw6 (master)
+$ cat yellow_tripdata_2016-01.csv | cut -f 5,6,7,10,11,19 -d, | grep ',1[0-9]\.[0-9]*[[:cntrl:]]*$' | grep -v 0,0 > 10dollarrides.csv
+
+shengzhang0830@shengzhang0830- MINGW64 /b9122-sz2622/hw6 (master)
+$ head -1 10dollarrides.csv > tail_5000.csv
+
+shengzhang0830@shengzhang0830- MINGW64 /b9122-sz2622/hw6 (master)
+$ tail -5000 10dollarrides.csv >> tail_5000.csv
+
+shengzhang0830@shengzhang0830- MINGW64 /b9122-sz2622/hw6 (master)
+$ ./PlotTaxiData.py tail_5000.csv
+rmse is 0.5750168505380455
+
+shengzhang0830@shengzhang0830- MINGW64 /b9122-sz2622/hw6 (master)
+$ ./PlotTaxiData.py head_50.csv
+rmse is 0.7321610632452299
 
