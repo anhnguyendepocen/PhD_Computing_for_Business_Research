@@ -93,16 +93,21 @@ rmse_all = []
 k_all = np.arange(1,len(y_train),1)
 
 for i in k_all:
-    y_pred.append(knn_predict_insample(x_train, y_train, x_train, i))
-    rmse_all.append(np.sqrt(sum((y_pred[i]-y_train)*(y_pred[i]-y_train))/len(y_train)))
+    y_pred_all.append(knn_predict_insample(x_train, y_train, x_train, i))
+    y_curr = knn_predict_insample(x_train, y_train, x_train, i)
+    rmse_curr = np.sqrt(sum((y_curr-y_train)*(y_curr-y_train))/len(y_train))
+    rmse_all.append(rmse_curr)
+    print('k=',i,': rmse',rmse_curr)
 
-smallest_k = np.argmin(rmse_all)
+k = np.argmin(rmse_all) + 1
 plt.scatter(k_all, rmse_all, marker = 'o', c= 'r', s = 40)
 plt.xlabel("K");
 plt.ylabel("RMSE")
 plt.show()
 
-y_test = knn_predict_insample(x_train, y_train, x_test, smallest_k)
+print('The k with the smallest rmse is',k)
+
+y_test = knn_predict_insample(x_train, y_train, x_test, k)
 
 # print out results
 print("\nk-NN train data:")
