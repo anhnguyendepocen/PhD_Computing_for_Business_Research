@@ -9,7 +9,7 @@ Complete this web crawler:
 
 This web crawler walks through the URLs in the source website. It only crawls 
 child URLs if it contains at least one of the pre-defined key words. Each URL
-has a score, which is defined as the number of occurence of the key words 
+has a score, which is defined as the number of occurrence of the key words 
 in the HTML body. 
 
 As an output it prints out the sorted list of URLs based on the score.
@@ -52,8 +52,7 @@ def main():
     """
     urls = [url]
     seen = [url] # stack of urls seen so far
-    opened = []
-    unopened = []
+    opened = {}
     
     while len(urls) > 0 and len(opened) < maxNumUrl:
         # pick an URL with the highest parent score,
@@ -61,12 +60,31 @@ def main():
         """
             insert your code
         """
-        
+
+        occurrence = {}
+                
+        for u in urls:
+            try:
+                html_for_scoring = requests.get(u).text
+                soup_for_scoring = bs(html_for_scoring)
+                words_for_scoring = html_words(soup_for_scoring)
+                occurrence_for_scoring = 0
+                for w in words_for_scoring:
+                    if w in keywords:
+                        occurrence_for_scoring += 1
+                if occurrence_for_scoring != 0:
+                    occurrence[u] = occurrence_for_scoring
+                sorted(occurrence.items (), key = lambda x: x [1])  # sort by occurrence
+            except Exception as ex:
+                print(ex)
+                continue
+
         try:
-            curr_url=urls.pop(0)
+            urls = occurrence.keys()
+            curr_url=urls.pop(-1)
             print("num. of URLs in stack: %d " % len(urls))
             htmltext = requests.get(curr_url).text
-            opened.append(curr_url)
+            opened[curr_url] = occurrence[curr_url]
         except Exception as ex: #if urlopen() fails
             print(ex)
             continue    #skip code below
@@ -81,9 +99,22 @@ def main():
         """
             insert your code
         """        
-        
+        for tag in soup.find_all('a', href = True): #find tags with links
+            childUrl = tag['href']          #extract just the link
+            childUrl = requests.compat.urljoin(url, childUrl)
+            if url in childUrl and childUrl not in seen:
+                urls.append(childUrl)
+                seen.append(childUrl)
+
+
     # print top 10 list of URLs with the highest scores
     """
         insert your code
     """
 
+    sorted(opened.items(), key = lambda x: x [1], reverse = True)  # sort by occurrence
+    i = 0
+    while i < 10:
+        for key, val in opened.items():
+            print(key,':',val)
+            i += 1
