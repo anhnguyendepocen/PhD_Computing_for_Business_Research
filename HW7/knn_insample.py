@@ -41,8 +41,9 @@ def knn_predict_insample(x_train, y_train, x_test, k):
     for i, di in enumerate(x_test):
         distances = []  # initialize list to store distance
         for j, dj in enumerate(x_train):
-            # calculate distances
-            distances.append((dist_euclidean(di,dj), y_train[j]))
+            if i != j:
+                # calculate distances
+                distances.append((dist_euclidean(di,dj), y_train[j]))
         # k-neighbors
         sorted_distances = sorted(distances)[:k]
 
@@ -53,7 +54,7 @@ def knn_predict_insample(x_train, y_train, x_test, k):
  
     # return predicted outcome
     return y_test
- 
+  
 def dist_euclidean(di,dj):
     """ Distance calculation between di and dj"""
     return ssd.euclidean(di,dj) # built-in Euclidean fn
@@ -93,15 +94,15 @@ rmse_all = []
 k_all = np.arange(1,len(y_train),1)
 
 for i in k_all:
-    y_pred_all.append(knn_predict_insample(x_train, y_train, x_train, i))
     y_curr = knn_predict_insample(x_train, y_train, x_train, i)
+    y_pred_all.append(y_curr)
     rmse_curr = np.sqrt(sum((y_curr-y_train)*(y_curr-y_train))/len(y_train))
     rmse_all.append(rmse_curr)
     print('k=',i,': rmse',rmse_curr)
 
 k = np.argmin(rmse_all) + 1
 plt.scatter(k_all, rmse_all, marker = 'o', c= 'r', s = 40)
-plt.xlabel("K");
+plt.xlabel("K")
 plt.ylabel("RMSE")
 plt.show()
 

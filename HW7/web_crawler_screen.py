@@ -34,87 +34,62 @@ def html_words(soup):
     
     return words
 
-def main():
-    url = "http://www8.gsb.columbia.edu/"        
-    maxNumUrl = 50      # the maximum number of URLs to be scanned
-    keywords = ['finance', 'engineering', 'business', 'research']
 
-    # initialize data arrays to be used
-    """
-        Hint: you may assign an arbitrary value to the parent score of
-        "http://www8.gsb.columbia.edu/", which doesn't have a parent. It will
-        be the first url opened in any case. 
-        You will maintain a datastructure "urls" for unopened urls, another 
-        one "opened" for opened urls, and possibly a third one "seen" that you 
-        use to avoid repetition.
+url = "http://www8.gsb.columbia.edu/"        
+maxNumUrl = 50      # the maximum number of URLs to be scanned
+keywords = ['finance', 'engineering', 'business', 'research']
+
+# initialize data arrays to be used
+"""
+    Hint: you may assign an arbitrary value to the parent score of
+    "http://www8.gsb.columbia.edu/", which doesn't have a parent. It will
+    be the first url opened in any case. 
+    You will maintain a datastructure "urls" for unopened urls, another 
+    one "opened" for opened urls, and possibly a third one "seen" that you 
+    use to avoid repetition.
         
-        insert your code
-    """
-    urls = [url]
-    seen = [url] # stack of urls seen so far
-    opened = {}
-    
-    while len(urls) > 0 and len(opened) < maxNumUrl:
-        # pick an URL with the highest parent score,
-        # open the URL, and get htmltext from it
-        """
-            insert your code
-        """
-
-        occurrence = {}
-                
-        for u in urls:
-            try:
-                html_for_scoring = requests.get(u).text
-                soup_for_scoring = bs(html_for_scoring)
-                words_for_scoring = html_words(soup_for_scoring)
-                occurrence_for_scoring = 0
-                for w in words_for_scoring:
-                    if w in keywords:
-                        occurrence_for_scoring += 1
-                if occurrence_for_scoring != 0:
-                    occurrence[u] = occurrence_for_scoring
-                sorted(occurrence.items (), key = lambda x: x [1])  # sort by occurrence
-            except Exception as ex:
-                print(ex)
-                continue
-
-        try:
-            urls = occurrence.keys()
-            curr_url=urls.pop(-1)
-            print("num. of URLs in stack: %d " % len(urls))
-            htmltext = requests.get(curr_url).text
-            opened[curr_url] = occurrence[curr_url]
-        except Exception as ex: #if urlopen() fails
-            print(ex)
-            continue    #skip code below
+    insert your code
+"""
+urls = [url]
+seen = [] # stack of urls seen so far
+unopened = {}
+opened = {}
 
 
-        # convert htmltext into a list of words
-        soup = bs(htmltext)
-        words = html_words(soup)
+while len(urls) > 0 and len(seen) < maxNumUrl:
+    # pick an URL with the highest parent score,
+    # open the URL, and get htmltext from it
+
+    try:
+        curr_url=urls.pop(-1)
+        seen.append(curr_url)
+        print("num. of URLs in stack: %d " % len(urls))
+        htmltext = requests.get(curr_url).text
+    except Exception as ex: #if urlopen() fails
+        print(ex)
+        continue    #skip code below
+
+
+    # convert htmltext into a list of words
+    soup = bs(htmltext, "html.parser")
+    # words = html_words(soup)
+    words_for_scoring = html_words(soup)
+    occurrence_for_scoring = 0
+    for w in words_for_scoring:
+        if w in keywords:
+            occurrence_for_scoring += 1
+    opened[curr_url] = occurrence_for_scoring
         
-        # get score of the URL, and
-        # put child URLs into "urls", only if the score > 0
-        """
-            insert your code
-        """        
-        for tag in soup.find_all('a', href = True): #find tags with links
-            childUrl = tag['href']          #extract just the link
-            childUrl = requests.compat.urljoin(url, childUrl)
-            if url in childUrl and childUrl not in seen:
+    # get score of the URL, and
+    # put child URLs into "urls", only if the score > 0
+    for tag in soup.find_all('a', href = True): #find tags with links
+        childUrl = tag['href']          #extract just the link
+        childUrl = requests.compat.urljoin(url, childUrl)
+        if childUrl not in seen:
                 urls.append(childUrl)
-                seen.append(childUrl)
+                unopened[childUrl] = occurrence_for_scoring
+                
+# print top 10 list of URLs with the highest scores
 
-
-    # print top 10 list of URLs with the highest scores
-    """
-        insert your code
-    """
-
-    sorted(opened.items(), key = lambda x: x [1], reverse = True)  # sort by occurrence
-    i = 0
-    while i < 10:
-        for key, val in opened.items():
-            print(key,':',val)
-            i += 1
+top = sorted(opened.items(), key = lambda x: x [1], reverse = True)  # sort by occurrence
+print(top[:10])
