@@ -74,22 +74,22 @@ while len(urls) > 0 and len(seen) < maxNumUrl:
     soup = bs(htmltext, "html.parser")
     # words = html_words(soup)
     words_for_scoring = html_words(soup)
+    # get score of the URL, and
     occurrence_for_scoring = 0
     for w in words_for_scoring:
         if w in keywords:
             occurrence_for_scoring += 1
     opened[curr_url] = occurrence_for_scoring
         
-    # get score of the URL, and
     # put child URLs into "urls", only if the score > 0
-    for tag in soup.find_all('a', href = True): #find tags with links
-        childUrl = tag['href']          #extract just the link
-        childUrl = requests.compat.urljoin(url, childUrl)
-        if childUrl not in seen:
-                urls.append(childUrl)
-                unopened[childUrl] = occurrence_for_scoring
+    if occurrence_for_scoring != 0:
+        for tag in soup.find_all('a', href = True): #find tags with links
+            childUrl = tag['href']          #extract just the link
+            childUrl = requests.compat.urljoin(url, childUrl)
+            if childUrl not in seen:
+                    urls.append(childUrl)
+                    unopened[childUrl] = occurrence_for_scoring
                 
 # print top 10 list of URLs with the highest scores
-
 top = sorted(opened.items(), key = lambda x: x [1], reverse = True)  # sort by occurrence
 print(top[:10])
