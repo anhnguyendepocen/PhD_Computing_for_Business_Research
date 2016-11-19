@@ -14,43 +14,57 @@ except Exception as ex:
 cur=conn.cursor() # cur will allow us to run queries on the db
 
 # Obtain data from the table adult_train
-n2 = cur.execute("SELECT Income, Age, Education_Num, Hours_Per_Week FROM adult_train")
-numobs = cur.rowcount;
+n1 = cur.execute("SELECT Income, Age, Education_Num, Hours_Per_Week FROM adult_train")
+obstrain = cur.rowcount;
 data = cur.fetchall()
+n2 = cur.execute("SELECT Income, Age, Education_Num, Hours_Per_Week FROM adult_test")
+obstest = cur.rowcount;
+data2 = cur.fetchall()
 cur.close()
 conn.close()
 
-print("First 10 rows of data:")
+print("First 10 rows of training data:")
 for i in range(10):
     print(data[i])
 
-# Split dataset into training and test set
-obstrain = int(0.8*numobs);
-obstest = numobs - obstrain;
+print("First 10 rows of test data:")
+for i in range(10):
+    print(data2[i])
 
-print(numobs)
+print("Training data has", obstrain, "observations")
+print("Test data has", obstest, "observations")
 
-X=np.zeros((numobs,3)); 
-y=np.empty((numobs,1));
+Xtr=np.zeros((obstrain,3)); 
+ytr=np.empty((obstrain,1));
+Xte=np.zeros((obstest,3)); 
+yte=np.empty((obstest,1));
+
 
 for i,rowtuple in enumerate(data): # Transform Income into a dummy variable
     if rowtuple[0]==' <=50K\r':
-        y[i]=0
+        ytr[i]=0
     elif rowtuple[0]==' >50K\r':
-        y[i]=1
+        ytr[i]=1
     else:
         print("Problem in first entry in row index", i)
     
-    X[i,0:] = rowtuple[1:]    
+    Xtr[i,0:] = rowtuple[1:]    
 
+for i,rowtuple in enumerate(data2): # Transform Income into a dummy variable
+    if rowtuple[0]==' <=50K.\r':
+        yte[i]=0
+    elif rowtuple[0]==' >50K.\r':
+        yte[i]=1
+    else:
+        print("Problem in first entry in row index", i)
     
-print("First 10 rows of X:\n", X[:10,:]);
-print("First 10 rows of y:\n", y[:10,:]);
-# Split data into training and test
-Xtr = X[:obstrain,:]
-ytr = y[:obstrain,:]
-Xte = X[obstrain:,:]
-yte = y[obstrain:,:]
+    Xte[i,0:] = rowtuple[1:]    
+
+
+print("First 10 rows of X training:\n", Xtr[:10,:]);
+print("First 10 rows of y training:\n", ytr[:10,:]);
+print("First 10 rows of X test:\n", Xte[:10,:]);
+print("First 10 rows of y test:\n", yte[:10,:]);
 
 # Logistic Regression (on training set)
 logreg = lm.LogisticRegression()
@@ -77,7 +91,7 @@ print("")
 logreg_pred = logreg.predict_proba(Xte)
 print("The model predicts", 100*sum(logreg_pred)[1]/obstest,"% of total population to be high income individuals")
 
-print(logreg_pred[1][1])
+# print(logreg_pred[1][1])
 
 high_income_proportion = []
 for i in range(10):
