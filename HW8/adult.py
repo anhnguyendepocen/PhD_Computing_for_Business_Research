@@ -28,6 +28,8 @@ for i in range(10):
 obstrain = int(0.8*numobs);
 obstest = numobs - obstrain;
 
+print(numobs)
+
 X=np.zeros((numobs,3)); 
 y=np.empty((numobs,1));
 
@@ -51,10 +53,16 @@ Xte = X[obstrain:,:]
 yte = y[obstrain:,:]
 
 # Logistic Regression (on training set)
-logreg = lm.LogisticRegression(C=1e5)
+logreg = lm.LogisticRegression()
 logreg.fit(Xtr, ytr.ravel())
 np.set_printoptions(precision=3)
 print("Intercept: ",logreg.intercept_, "\n Coefficients: ", logreg.coef_)
+print("Error probability of logistic classifier (in sample): ", 1-logreg.score(Xte,yte))
+
+# Interpretation
+# The coefficients suggest that the log odds ratio of being in the high-income associated with a one year increase in age is about 0.045,
+# that the log odds ratio of being in the high-income associated with a one year increase in education is about 0.338,
+# and that the log odds ratio of being in the high-income associated with a one hour increase in working hours per week is about 0.041. 
 
 # Logistic Regression (on test set)
 stdte = np.std(yte)
@@ -64,17 +72,31 @@ print("Test (logistic regression):")
 print("Std deviation of y:", '%.3f' % stdte)
 print("RMSE: ", '%.3f' % rmsete)
 print("Rsq: ", '%.3f' % Rsqte)
+print("")
 
-print("The model predicts",100*sum(logreg.predict(Xte))/obstest,"% of total population to be high income individuals")
+logreg_pred = logreg.predict_proba(Xte)
+print("The model predicts", 100*sum(logreg_pred)[1]/obstest,"% of total population to be high income individuals")
 
-# Interpretation
-# 
+print(logreg_pred[1][1])
 
+high_income_proportion = []
+for i in range(10):
+	Num_high = 0
+	Num_total = 0
+	for j in range(obstest):
+		if logreg_pred[j][1] > i/10 and logreg_pred[j][1] < (i+1)/10:
+			Num_total +=1
+			if yte[j] == 1:
+				Num_high +=1
+	high_income_proportion.append(Num_high/Num_total)
 
 # Visualization
 matplotlib.rcParams.update({'font.size': 15})
-plt.scatter(logreg.predict(Xte), yte.ravel() - logreg.predict(Xte))
-plt.xlabel('Prediction')
-plt.ylabel('Error in prediction')
+ind = np.arange(0,1,0.1)
+width = 0.1
+bar_high_income = plt.bar(ind,high_income_proportion,width)
+plt.xlim([0,1])
+plt.xlabel('Probability of High Income from Model')
+plt.ylabel('Fraction of High Income from Data (Hit Rate)')
 plt.show()
 
