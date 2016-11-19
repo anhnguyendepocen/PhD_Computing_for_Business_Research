@@ -41,9 +41,9 @@ yte=np.empty((obstest,1));
 
 
 for i,rowtuple in enumerate(data): # Transform Income into a dummy variable
-    if rowtuple[0]==' <=50K\r':
+    if ' <=50K' in rowtuple[0]:
         ytr[i]=0
-    elif rowtuple[0]==' >50K\r':
+    elif ' >50K' in rowtuple[0]:
         ytr[i]=1
     else:
         print("Problem in first entry in row index", i)
@@ -51,20 +51,26 @@ for i,rowtuple in enumerate(data): # Transform Income into a dummy variable
     Xtr[i,0:] = rowtuple[1:]    
 
 for i,rowtuple in enumerate(data2): # Transform Income into a dummy variable
-    if rowtuple[0]==' <=50K.\r':
+    if ' <=50K' in rowtuple[0]:
         yte[i]=0
-    elif rowtuple[0]==' >50K.\r':
+    elif ' >50K' in rowtuple[0]:
         yte[i]=1
     else:
         print("Problem in first entry in row index", i)
     
     Xte[i,0:] = rowtuple[1:]    
 
+# print(np.mean(yte.ravel()),np.mean(ytr.ravel()))
 
 print("First 10 rows of X training:\n", Xtr[:10,:]);
 print("First 10 rows of y training:\n", ytr[:10,:]);
 print("First 10 rows of X test:\n", Xte[:10,:]);
 print("First 10 rows of y test:\n", yte[:10,:]);
+
+print("Last 10 rows of X training:\n", Xtr[32555:32560,:]);
+print("Last 10 rows of y training:\n", ytr[32555:32560,:]);
+print("Last 10 rows of X test:\n", Xte[16275:16280,:]);
+print("Last 10 rows of y test:\n", yte[16275:16280,:]);
 
 # Logistic Regression (on training set)
 logreg = lm.LogisticRegression()
@@ -74,13 +80,13 @@ print("Intercept: ",logreg.intercept_, "\n Coefficients: ", logreg.coef_)
 print("Error probability of logistic classifier (in sample): ", 1-logreg.score(Xte,yte))
 
 # Interpretation
-# The coefficients suggest that the log odds ratio of being in the high-income associated with a one year increase in age is about 0.045,
-# that the log odds ratio of being in the high-income associated with a one year increase in education is about 0.338,
-# and that the log odds ratio of being in the high-income associated with a one hour increase in working hours per week is about 0.041. 
+# The coefficients suggest that the log odds ratio of being in the high-income associated with a one year increase in age is about 0.046,
+# that the log odds ratio of being in the high-income associated with a one year increase in education is about 0.341,
+# and that the log odds ratio of being in the high-income associated with a one hour increase in working hours per week is about 0.042. 
 
 # Logistic Regression (on test set)
 stdte = np.std(yte)
-rmsete = np.std(yte.ravel() - logreg.predict(Xte))
+rmsete = np.std(yte.ravel() - logreg.predict_proba(Xte)[:,1])
 Rsqte = 1 - rmsete**2/stdte**2
 print("Test (logistic regression):")
 print("Std deviation of y:", '%.3f' % stdte)
@@ -89,7 +95,8 @@ print("Rsq: ", '%.3f' % Rsqte)
 print("")
 
 logreg_pred = logreg.predict_proba(Xte)
-print("The model predicts", 100*sum(logreg_pred)[1]/obstest,"% of total population to be high income individuals")
+logreg_predt = logreg.predict(Xte)
+print("The model predicts", 100*sum(logreg_predt)/obstest,"% of total population to be high income individuals")
 
 # print(logreg_pred[1][1])
 
@@ -104,13 +111,16 @@ for i in range(10):
 				Num_high +=1
 	high_income_proportion.append(Num_high/Num_total)
 
+# print(high_income_proportion)
+
 # Visualization
-matplotlib.rcParams.update({'font.size': 15})
+matplotlib.rcParams.update({'font.size': 12})
 ind = np.arange(0,1,0.1)
 width = 0.1
 bar_high_income = plt.bar(ind,high_income_proportion,width)
 plt.xlim([0,1])
 plt.xlabel('Probability of High Income from Model')
 plt.ylabel('Fraction of High Income from Data (Hit Rate)')
+plt.plot([0,1],[0,1],)
 plt.show()
 
