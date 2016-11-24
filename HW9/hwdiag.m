@@ -1,6 +1,6 @@
 function A = hwdiag(n)
 
-A = zeros(n,n)
+A = zeros(n,n);
 
 if n > 1
     for c = 1:n
