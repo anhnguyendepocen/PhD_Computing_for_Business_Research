@@ -11,8 +11,8 @@ function  [Q,fcount] = quad_trapz_vec(F,a,b,h,varargin)
 %
 
 x_vec = [ a : h : b];
-Q = feval(F,x_vec,varargin{:}) - 0.5 * feval(F,a,varargin{:}) - 0.5 * feval(F,b,varargin{:});
-Q = h*sum(Q);
+Q = feval(F,x_vec,varargin{:});
+Q = h*(sum(Q)-0.5*sum(feval(F,[a,b])));
 fcount = length(x_vec);
 
 % end of function quad_rectangle_vec.m
