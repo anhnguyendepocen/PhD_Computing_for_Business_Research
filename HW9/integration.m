@@ -13,7 +13,7 @@ disp(sprintf('The exact value of the integral is: %11.8f',Qexact));
 %%
 h      = 0.5;
 n      = 16;
-% 0.01 and 80 do not work?????????????????
+
 h_vec  = cumprod(h(ones(1,n)));
 Qrect  = zeros(n,1);
 Qcount = zeros(n,1);
