@@ -1,0 +1,40 @@
+
+% Ask for user input
+trainFileName = 'facebook_data.csv';
+testFileName = 'facebook_data_test.csv';
+
+% Read data from .csv
+train_data = csvread(trainFileName);
+test_data = csvread(testFileName);
+numObsTrain = size(train_data, 1);
+numParams = size(train_data,2) - 1;
+numObsTest = size(test_data, 1);
+
+for k = 1:(numObsTrain-1
+    % Check correctness of input data
+    if numParams ~= size(test_data, 2)
+    disp('File read error : Dimensions of matrix x and matrix x_new do not match');
+    end
+    if numObsTrain <= k
+    disp('File read error : Number of observations must be greater than k');
+    end
+
+
+    x_train = train_data(:, 2: end );
+    y_train = train_data(:, 1);
+    x_test = test_data;
+
+    % Run kNN
+    [ypred, rmse] = knn_predict_insample( x_train, y_train, k);
+
+    
+    % Print result
+    disp('k-NN train data: ');
+    disp('[ x_train y_train ] = ');
+    disp([x_train y_train]);
+    disp(['k-NN prediction result with k = ' num2str(k) ':']);
+    disp([ x_train ypred]);
+    disp(rmse);
+
+end
+
